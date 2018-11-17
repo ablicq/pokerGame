@@ -18,7 +18,7 @@ public class PokerDeck implements Deck {
     }
 
     public Card getNext() {
-        return cards.get(++counter);
+        return cards.get(counter++);
     }
 
     public void shuffle() {
