@@ -16,4 +16,12 @@ public class Player {
         this.secondCard = null;
         this.position = -1;
     }
+
+    public void setFirstCard(Card firstCard) {
+        this.firstCard = firstCard;
+    }
+
+    public void setSecondCard(Card secondCard) {
+        this.secondCard = secondCard;
+    }
 }
