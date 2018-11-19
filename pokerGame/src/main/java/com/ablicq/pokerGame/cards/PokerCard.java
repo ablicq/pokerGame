@@ -1,19 +1,19 @@
-package com.ablicq.pokerGame;
+package com.ablicq.pokerGame.cards;
 
 public class PokerCard implements Card{
-    private int rank;
-    private int suit;
+    private CardRank rank;
+    private CardSuit suit;
 
-    public PokerCard(int rank, int suit) {
+    public PokerCard(CardRank rank, CardSuit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    public int getRank() {
+    public CardRank getRank() {
         return rank;
     }
 
-    public int getSuit() {
+    public CardSuit getSuit() {
         return suit;
     }
 

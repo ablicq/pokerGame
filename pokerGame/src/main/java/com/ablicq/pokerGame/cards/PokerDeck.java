@@ -1,4 +1,4 @@
-package com.ablicq.pokerGame;
+package com.ablicq.pokerGame.cards;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +8,9 @@ public class PokerDeck implements Deck {
     private int counter;
 
     public PokerDeck() {
-        this.cards = new ArrayList<Card>();
-        for(int r = 2; r <= 14; r++){
-            for( int s = 1; s <= 4;  s++){
+        this.cards = new ArrayList<>();
+        for(CardRank r : CardRank.values()){
+            for(CardSuit s : CardSuit.values()){
                 this.cards.add(new PokerCard(r, s));
             }
         }

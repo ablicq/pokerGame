@@ -1,4 +1,4 @@
-package com.ablicq.pokerGame;
+package com.ablicq.pokerGame.cards;
 
 /**
  * This interface defines the basic interactions with a Deck of cards

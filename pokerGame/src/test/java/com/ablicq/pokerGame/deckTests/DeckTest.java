@@ -1,9 +1,6 @@
 package com.ablicq.pokerGame.deckTests;
 
-import com.ablicq.pokerGame.Card;
-import com.ablicq.pokerGame.Deck;
-import com.ablicq.pokerGame.PokerCard;
-import com.ablicq.pokerGame.PokerDeck;
+import com.ablicq.pokerGame.cards.*;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +18,7 @@ public class DeckTest{
     @Test
     public void initTest()
     {
-        Assertions.assertEquals(new PokerCard(2, 1), deck.getNext());
+        assertEquals(new PokerCard(CardRank.DEUCE, CardSuit.SPADES), deck.getNext());
 
     }
 

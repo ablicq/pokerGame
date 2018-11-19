@@ -1,5 +1,7 @@
 package com.ablicq.pokerGame;
 
+import com.ablicq.pokerGame.cards.Card;
+
 public class Player {
     private Card firstCard;
     private Card secondCard;

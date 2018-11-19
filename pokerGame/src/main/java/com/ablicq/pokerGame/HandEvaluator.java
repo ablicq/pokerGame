@@ -1,12 +1,15 @@
 package com.ablicq.pokerGame;
 
+import com.ablicq.pokerGame.cards.Card;
+import com.ablicq.pokerGame.cards.CardRank;
+
 import java.util.*;
 
 public class HandEvaluator {
     public static int evalFiveCards(ArrayList<Card> cards) {
 
         // compute a histogram for the values
-        HashMap<Integer, Integer> hist = new HashMap<>();
+        HashMap<CardRank, Integer> hist = new HashMap<>();
         for (Card c : cards) {
             if (hist.containsKey(c.getRank())) {
                 hist.replace(c.getRank(), hist.get(c.getRank()) + 1);
@@ -36,6 +39,8 @@ public class HandEvaluator {
             rank = 1; // one pair
         }
 
+        System.out.println(rank);
+
         // check if the hand is a flush
         boolean isFlush = true;
         for(Card c : cards){
@@ -45,19 +50,25 @@ public class HandEvaluator {
         }
 
         // check if the hand is a straight
-        ArrayList<Integer> sKey = new ArrayList<>(hist.keySet());
+        ArrayList<CardRank> sKey = new ArrayList<>(hist.keySet());
         Collections.sort(sKey);
-        boolean isStraight = (sKey.get(sKey.size()-1) - sKey.get(0) == 4) || (sKey.get(sKey.size()-1) == 14 && sKey.get(sKey.size()-2) == 5);
+        // this complicated condition takes into account the 5-high straights
+        boolean isStraight = (sKey.size() == 5 && sKey.get(sKey.size()-1).getVal() - sKey.get(0).getVal() == 4) ||
+                (sKey.get(sKey.size()-1).getVal() == 14 && sKey.get(sKey.size()-2).getVal() == 5);
+
+        System.out.println(isStraight);
 
         if (isFlush && isStraight){
             rank = 8; // straight flush
         }
         else if (isFlush){
-            rank = 5;
+            rank = 5; // flush
         }
         else if (isStraight){
-            rank = 4;
+            rank = 4; // straight
         }
+
+        System.out.println(rank);
 
         return rank;
     }
