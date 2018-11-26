@@ -10,11 +10,15 @@ import java.util.ArrayList;
  */
 public class Game {
 
+    // ####################################################
+    // #################### Attributes ####################
+    // ####################################################
+
     /**
-     * An enum to store the state of the game (preflop, flop, turn or river)
+     * An enum to store the phase of the game (preflop, flop, turn or river)
      * This helps for dealing cards and readability
      */
-    private enum State {PREFLOP, FLOP, TURN, RIVER}
+    private enum Phase {PREFLOP, FLOP, TURN, RIVER}
 
 
     /**
@@ -45,10 +49,14 @@ public class Game {
     private ArrayList<Player> players;
 
     /**
-     * The current state of the current hand
-     * @see State
+     * The current phase of the current hand
+     * @see Phase
      */
-    private State state;
+    private Phase phase;
+
+    // ########################################################
+    // ####################  Constructors  ####################
+    // ########################################################
 
     /**
      * The constructor of the poker game
@@ -58,8 +66,12 @@ public class Game {
     public Game(Deck deck, ArrayList<Player> players) {
         this.deck = deck;
         this.players = players;
-        this.state = State.PREFLOP;
+        this.phase = Phase.PREFLOP;
     }
+
+    // ###############################################################
+    // ####################  Getters and Setters  ####################
+    // ###############################################################
 
     /**
      * A method to get the information about the board cards
@@ -85,6 +97,10 @@ public class Game {
         return players;
     }
 
+    // #######################################################
+    // ####################  main method  ####################
+    // #######################################################
+
     /**
      * the main function that runs the game loop
      * @param args currently, no argument is parsed for the main function
@@ -93,24 +109,32 @@ public class Game {
         //TODO: implement the main function
     }
 
+    // ##################################################
+    // ####################  methods ####################
+    // ##################################################
+
     /**
      * Emulates one hand of the game
      */
     private void oneHand(){
         reset(); // first, reset the game
-        this.state = State.PREFLOP; // then, it is time for the preflop
-        dealNextStep(); // deal the cards
-        //manageActions(); // wait for actions
-        this.state = State.FLOP; // then the flop
-        dealNextStep(); // deal the cards
-        //manageActions(); // wait for actions
-        this.state = State.TURN; // then, the turn
-        dealNextStep(); // deal the cards
-        //manageActions(); // wait for actions
-        this.state = State.RIVER; // then, the river
-        dealNextStep(); // deal the cards
-        //manageActions(); // wait for actions
-             board.clear(); // clear the board   //getHandResults(); // finally, get the results and give the reward
+        this.phase = Phase.PREFLOP; // then, it is time for the preflop
+        onePhase();
+        this.phase = Phase.FLOP; // then, the flop
+        onePhase();
+        this.phase = Phase.TURN; // then, the turn
+        onePhase();
+        this.phase = Phase.RIVER; // then, the river
+        onePhase();
+        getHandResults(); // finally, get the results and give the reward
+    }
+
+    /**
+     * Emulates one phase of the game
+     */
+    private void onePhase(){
+        dealNextPhase(); // deal the cards
+        manageActions(); // wait for actions
     }
 
     /**
@@ -119,17 +143,20 @@ public class Game {
     private void reset(){
         board.clear(); // clear the board
         deck.shuffle(); // shuffle the deck
+        for (Player p : players){
+            p.setIn(true);
+        }
         pot = 0; // empty the pot
     }
 
     /**
-     * Deals the cards for the next step:
+     * Deals the cards for the next phase:
      * preflop : each player receives two cards
      * flop : three cards are dealt on the board
      * turn and river : one more card for the board
      */
-    private void dealNextStep(){
-        switch (state){
+    private void dealNextPhase(){
+        switch (phase){
             case PREFLOP:
                 // if preflop, we deal their cards to the players
                 for(Player p : players)
@@ -152,16 +179,51 @@ public class Game {
     }
 
     /**
-     * Asks the players for their action (bet, check, fold, call, raise)
+     * Asks the players for their action
+     * each player is asked for a bet
+     * if the bet is strictly less than the current bet size, it is considered as a fold
+     * if the bet is equal to the current bet size it is either a check (bet size = 0) or a call (bet size > 0)
+     * if the bet is strictly greater than the current bet size, it is considered as a raise
      */
     private void manageActions(){
+        int lastBeter = 0; // a variable to remember who was the last player to bet
+        int i = 0; // the index of the current active player
+        int n = players.size(); // for readability
+        int currentBetSize = 0; // the current bet size
 
+        do{
+            Player p = players.get(i); // get the next player (for readability)
+            if (!p.isIn()){
+                // if the player folded, we directly go for the next one
+                i = (i+1)%n;
+                continue;
+            }
+
+            int b = p.getBet(); // otherwise, we ask for a bet
+
+            if(b < currentBetSize)
+                // if it is less than the current bet size, it is considered as a fold
+                p.setIn(false);
+            else if(b > currentBetSize){
+                // if greater, it is a raise
+                currentBetSize = b;
+                lastBeter = i;
+            }
+            // note : the equality is not considered because there is nothing to do in this case
+
+            i = (i+1)%n; // iterate for the next player
+        }while(i%n != lastBeter); // we iterate until no one is left to act
+
+        // go fetch the bets of each players and add these to the pot
+        for(Player p : players){
+            pot += p.fetchBet();
+        }
     }
 
     /**
      * evaluates hands and gives its chips to the winner
      */
     private void getHandResults(){
-
+        // TODO
     }
 }
