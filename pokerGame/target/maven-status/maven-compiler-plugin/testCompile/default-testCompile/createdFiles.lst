@@ -1,3 +1,4 @@
 com/ablicq/pokerGame/HandEvaluatorTests/EvalFiveCardsTest.class
 com/ablicq/pokerGame/GlobalTestSuite.class
 com/ablicq/pokerGame/deckTests/DeckTest.class
+com/ablicq/pokerGame/gameTests/CardDealingTests.class

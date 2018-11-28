@@ -6,6 +6,11 @@ import com.ablicq.pokerGame.cards.CardRank;
 import java.util.*;
 
 public class HandEvaluator {
+    /**
+     * Evaluates the value of a set of 5 cards
+     * @param cards the set of cards to evaluate
+     * @return the value of the hand as an int (from 0-high_card to 8-straight_flush)
+     */
     public static int evalFiveCards(ArrayList<Card> cards) {
 
         // compute a histogram for the values
@@ -70,6 +75,28 @@ public class HandEvaluator {
 
         System.out.println(rank);
 
+        return rank;
+    }
+
+    /**
+     * evaluates the value of a set of 7 cards
+     * @param cards the set of cards to be evaluated
+     * @return the value of the hand as an int (from 0-high card to 8-straight flush)
+     */
+    public static int evalSevenCards(ArrayList<Card> cards){
+        int rank = 0;
+        for(int i=0; i<7; i++){
+            for(int j=0; j<7; j++){
+                if(i==j) continue;
+                ArrayList<Card> fiveCardSample = new ArrayList<>(cards);
+                fiveCardSample.remove(i);
+                fiveCardSample.remove(j);
+                int sampleRank = evalFiveCards(fiveCardSample);
+                if (sampleRank > rank){
+                    rank = sampleRank;
+                }
+            }
+        }
         return rank;
     }
 }
