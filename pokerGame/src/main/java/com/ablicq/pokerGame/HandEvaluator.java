@@ -81,7 +81,7 @@ public class HandEvaluator {
     /**
      * evaluates the value of a set of 7 cards
      * @param cards the set of cards to be evaluated
-     * @return the value of the hand as an int (from 0-high card to 8-straight flush)
+     * @return the value of the hand as an int (from 0-high_card to 8-straight_flush)
      */
     public static int evalSevenCards(ArrayList<Card> cards){
         int rank = 0;
