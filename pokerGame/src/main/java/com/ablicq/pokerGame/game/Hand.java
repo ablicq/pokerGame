@@ -1,5 +1,6 @@
-package com.ablicq.pokerGame;
+package com.ablicq.pokerGame.game;
 
+import com.ablicq.pokerGame.Player;
 import com.ablicq.pokerGame.cards.Card;
 import com.ablicq.pokerGame.cards.Deck;
 import com.ablicq.pokerGame.cards.PokerDeck;
@@ -11,13 +12,6 @@ public class Hand {
     // ####################################################
     // #################### Attributes ####################
     // ####################################################
-
-    /**
-     * An enum to store the phase of the game (preflop, flop, turn or river)
-     * This helps for dealing cards and readability
-     */
-    private enum Phase {PREFLOP, FLOP, TURN, RIVER}
-
 
     /**
      * The board of the game ie the cards that has been dealt
@@ -98,27 +92,37 @@ public class Hand {
     // ####################  methods ####################
     // ##################################################
 
+
     /**
-     * Emulates one hand of the game
+     * resets the hand and make it ready for a new hand
+     * @param players the players that participate to the next hand
      */
-    public void play(){
-        this.phase = Phase.PREFLOP; // first, the preflop
-        onePhase();
-        this.phase = Phase.FLOP; // then, the flop
-        onePhase();
-        this.phase = Phase.TURN; // then, the turn
-        onePhase();
-        this.phase = Phase.RIVER; // then, the river
-        onePhase();
-        getHandResults(); // finally, get the results and give the reward
+    void reset(ArrayList<Player> players){
+        board.clear();
+        deck.shuffle();
+        pot = 0;
+        this.players = players;
+        this.phase = Phase.PREFLOP;
     }
 
     /**
-     * Emulates one phase of the game
+     * set the phase of the game to the next one
+     * if the current phase is river, do nothing
      */
-    private void onePhase(){
-        dealNextPhase(); // deal the cards
-        manageActions(); // wait for actions
+    void nextPhase(){
+        switch (phase){
+            case PREFLOP:
+                phase = Phase.FLOP;
+                return;
+            case FLOP:
+                phase = Phase.TURN;
+                return;
+            case TURN:
+                phase = Phase.RIVER;
+                return;
+            case RIVER:
+                // do nothing
+        }
     }
 
     /**
@@ -127,7 +131,7 @@ public class Hand {
      * flop : three cards are dealt on the board
      * turn and river : one more card for the board
      */
-    private void dealNextPhase(){
+    void dealCards(){
         switch (phase){
             case PREFLOP:
                 // if preflop, we deal their cards to the players
@@ -157,7 +161,7 @@ public class Hand {
      * if the bet is equal to the current bet size it is either a check (bet size = 0) or a call (bet size > 0)
      * if the bet is strictly greater than the current bet size, it is considered as a raise
      */
-    private void manageActions(){
+    void manageActions(){
         int lastBeter = 0; // a variable to remember who was the last player to bet
         int i = 0; // the index of the current active player
         int n = players.size(); // for readability
@@ -195,7 +199,7 @@ public class Hand {
     /**
      * evaluates hands and gives its chips to the winner
      */
-    private void getHandResults(){
+    void results(){
         // TODO
     }
 }

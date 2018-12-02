@@ -1,4 +1,4 @@
-package com.ablicq.pokerGame;
+package com.ablicq.pokerGame.game;
 
 import com.ablicq.pokerGame.cards.Card;
 import com.ablicq.pokerGame.cards.CardRank;

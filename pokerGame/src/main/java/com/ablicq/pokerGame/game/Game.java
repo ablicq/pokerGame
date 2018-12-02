@@ -1,12 +1,13 @@
-package com.ablicq.pokerGame;
+package com.ablicq.pokerGame.game;
 
-import com.ablicq.pokerGame.cards.Card;
-import com.ablicq.pokerGame.cards.Deck;
+import com.ablicq.pokerGame.Player;
 
 import java.util.ArrayList;
 
 /**
  * This class contains the methods needed to run a game of poker
+ * It implements the logic of a game of poker, and is responsible for calling methods to
+ * control the Hand object, representing the current state of the game
  */
 public class Game {
 
@@ -14,12 +15,13 @@ public class Game {
     // #################### Attributes ####################
     // ####################################################
 
-
     /**
      * The players involved in the game
      * @see Player
      */
     private ArrayList<Player> players;
+
+    private Hand hand;
 
     // ########################################################
     // ####################  Constructors  ####################
@@ -27,11 +29,11 @@ public class Game {
 
     /**
      * The constructor of the poker game
-     * @param deck the deck of cards with which the game will be played
      * @param players the players for the game
      */
-    public Game(Deck deck, ArrayList<Player> players) {
+    public Game(ArrayList<Player> players) {
         this.players = players;
+        this.hand = new Hand(players);
     }
 
     // ###############################################################
@@ -46,6 +48,9 @@ public class Game {
         return players;
     }
 
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
 
     // ###################################################
     // ####################  Methods  ####################
@@ -57,8 +62,13 @@ public class Game {
      */
     public void runGame(){
         while(true){
-            Hand hand = new Hand(players);
-            hand.play();
+            hand.reset(players);
+            for(int i = 0; i < 4; i++) {
+                hand.dealCards();
+                hand.manageActions();
+                hand.nextPhase();
+            }
+            hand.results();
         }
     }
 

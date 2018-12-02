@@ -1,6 +1,6 @@
 package com.ablicq.pokerGame.HandEvaluatorTests;
 
-import com.ablicq.pokerGame.HandEvaluator;
+import com.ablicq.pokerGame.game.HandEvaluator;
 import com.ablicq.pokerGame.cards.Card;
 import com.ablicq.pokerGame.cards.CardRank;
 import com.ablicq.pokerGame.cards.CardSuit;

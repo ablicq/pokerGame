@@ -14,7 +14,6 @@ public class PokerDeck implements Deck {
                 this.cards.add(new PokerCard(r, s));
             }
         }
-        this.shuffle();
     }
 
     public Card getNext() {
