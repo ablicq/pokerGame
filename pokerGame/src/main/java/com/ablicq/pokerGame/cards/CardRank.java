@@ -1,6 +1,6 @@
 package com.ablicq.pokerGame.cards;
 
-public enum CardRank {
+public enum CardRank implements Comparable<CardRank> {
     DEUCE (2),
     THREE (3),
     FOUR (4),

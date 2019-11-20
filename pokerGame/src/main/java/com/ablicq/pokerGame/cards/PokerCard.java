@@ -24,4 +24,9 @@ public class PokerCard implements Card{
         PokerCard card = (PokerCard) obj;
         return (rank == card.getRank() && suit == card.getSuit());
     }
+
+    @Override
+    public int compareTo(Card card) {
+        return this.rank.compareTo(card.getRank());
+    }
 }

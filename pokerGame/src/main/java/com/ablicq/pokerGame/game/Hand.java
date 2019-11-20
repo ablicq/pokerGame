@@ -1,6 +1,5 @@
 package com.ablicq.pokerGame.game;
 
-import com.ablicq.pokerGame.Player;
 import com.ablicq.pokerGame.cards.Card;
 import com.ablicq.pokerGame.cards.Deck;
 import com.ablicq.pokerGame.cards.PokerDeck;
@@ -8,6 +7,15 @@ import com.ablicq.pokerGame.cards.PokerDeck;
 import java.util.ArrayList;
 
 public class Hand {
+
+    /**
+     * An enum to store the phase of the game (preflop, flop, turn or river)
+     * This helps for dealing cards and readability
+     */
+    private enum Phase {
+        PREFLOP, FLOP, TURN, RIVER
+    }
+
 
     // ####################################################
     // #################### Attributes ####################
@@ -200,6 +208,17 @@ public class Hand {
      * evaluates hands and gives its chips to the winner
      */
     void results(){
-        // TODO
+//        Player winner = players.get(0);
+//        ArrayList<Card> winnerCards = (ArrayList<Card>) board.clone();
+//        winnerCards.addAll(winner.getCards());
+//        for (Player p : players){
+//            ArrayList<Card> playerCards = (ArrayList<Card>) board.clone();
+//            playerCards.addAll(p.getCards());
+//            if(HandEvaluator.evalSevenCards(playerCards) > HandEvaluator.evalSevenCards(winnerCards)){
+//                winner = p;
+//                winnerCards = playerCards;
+//            }
+//        }
+//        winner.giveChips(pot);
     }
 }

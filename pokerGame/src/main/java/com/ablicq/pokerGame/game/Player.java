@@ -1,7 +1,8 @@
-package com.ablicq.pokerGame;
+package com.ablicq.pokerGame.game;
 
 import com.ablicq.pokerGame.cards.Card;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
@@ -16,6 +17,13 @@ public class Player {
         this.betStash = 0;
         this.firstCard = null;
         this.secondCard = null;
+    }
+
+    public ArrayList<Card> getCards(){
+        ArrayList<Card> ret = new ArrayList<>();
+        ret.add(firstCard);
+        ret.add(secondCard);
+        return ret;
     }
 
     public void setFirstCard(Card firstCard) {
@@ -40,6 +48,10 @@ public class Player {
 
     public int getBetStash() {
         return betStash;
+    }
+
+    public void giveChips(int nbChips){
+        chipStack += nbChips;
     }
 
     public int getBet() {
