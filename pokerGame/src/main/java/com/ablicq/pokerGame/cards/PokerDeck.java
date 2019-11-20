@@ -14,7 +14,6 @@ public class PokerDeck implements Deck {
                 this.cards.add(new PokerCard(r, s));
             }
         }
-        this.counter = 0;
     }
 
     public Card getNext() {

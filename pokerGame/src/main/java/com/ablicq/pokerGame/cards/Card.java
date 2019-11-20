@@ -2,9 +2,8 @@ package com.ablicq.pokerGame.cards;
 
 /**
  * This interface defines the basic interactions of a Card
- *
  */
-public interface Card
+public interface Card extends Comparable<Card>
 {
 	/**
 	 * This method gives the rank of the card (eg 3 if the card is three of spades)

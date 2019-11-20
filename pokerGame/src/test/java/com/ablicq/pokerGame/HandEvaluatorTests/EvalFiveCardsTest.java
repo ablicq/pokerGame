@@ -1,14 +1,16 @@
 package com.ablicq.pokerGame.HandEvaluatorTests;
 
-import com.ablicq.pokerGame.HandEvaluator;
+import com.ablicq.pokerGame.game.HandEvaluator;
 import com.ablicq.pokerGame.cards.Card;
 import com.ablicq.pokerGame.cards.CardRank;
 import com.ablicq.pokerGame.cards.CardSuit;
 import com.ablicq.pokerGame.cards.PokerCard;
+import com.ablicq.pokerGame.game.Score;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EvalFiveCardsTest {
@@ -26,7 +28,10 @@ public class EvalFiveCardsTest {
     @Test
     public void nothingTest(){
         ArrayList<Card> hand = generateNothing();
-        assertEquals(0, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(0, score.getEval());
+        assertEquals(14, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 
     private ArrayList<Card> generatePair(){
@@ -42,7 +47,10 @@ public class EvalFiveCardsTest {
     @Test
     public void pairTest(){
         ArrayList<Card> hand = generatePair();
-        assertEquals(1, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(1, score.getEval());
+        assertEquals(2, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateTwoPairs(){
@@ -58,7 +66,10 @@ public class EvalFiveCardsTest {
     @Test
     public void twoPairsTest(){
         ArrayList<Card> hand = generateTwoPairs();
-        assertEquals(2, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(2, score.getEval());
+        assertEquals(14, score.getAbsoluteHeight());
+        assertEquals(2, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateThreeOfAKind(){
@@ -74,7 +85,10 @@ public class EvalFiveCardsTest {
     @Test
     public void ThreeOfAKindTest(){
         ArrayList<Card> hand = generateThreeOfAKind();
-        assertEquals(3, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(3, score.getEval());
+        assertEquals(2, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateStraight1(){
@@ -90,7 +104,10 @@ public class EvalFiveCardsTest {
     @Test
     public void straight1Test(){
         ArrayList<Card> hand = generateStraight1();
-        assertEquals(4, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(4, score.getEval());
+        assertEquals(6, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateStraight2(){
@@ -106,7 +123,10 @@ public class EvalFiveCardsTest {
     @Test
     public void straight2Test(){
         ArrayList<Card> hand = generateStraight2();
-        assertEquals(4, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(4, score.getEval());
+        assertEquals(5, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateFlush(){
@@ -122,7 +142,10 @@ public class EvalFiveCardsTest {
     @Test
     public void flushTest(){
         ArrayList<Card> hand = generateFlush();
-        assertEquals(5, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(5, score.getEval());
+        assertEquals(8, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateFullHouse(){
@@ -138,7 +161,10 @@ public class EvalFiveCardsTest {
     @Test
     public void fullHouseTest(){
         ArrayList<Card> hand = generateFullHouse();
-        assertEquals(6, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(6, score.getEval());
+        assertEquals(2, score.getAbsoluteHeight());
+        assertEquals(5, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateFourOfAKind(){
@@ -154,7 +180,10 @@ public class EvalFiveCardsTest {
     @Test
     public void fourOfAKindTest(){
         ArrayList<Card> hand = generateFourOfAKind();
-        assertEquals(7, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(7, score.getEval());
+        assertEquals(2, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 
     private ArrayList<Card> generateStraightFlush(){
@@ -170,6 +199,9 @@ public class EvalFiveCardsTest {
     @Test
     public void straightFlushTest(){
         ArrayList<Card> hand = generateStraightFlush();
-        assertEquals(8, HandEvaluator.evalFiveCards(hand));
+        Score score = HandEvaluator.evalFiveCards(hand);
+        assertEquals(8, score.getEval());
+        assertEquals(6, score.getAbsoluteHeight());
+        assertEquals(0, score.getAuxHeight());
     }
 }
